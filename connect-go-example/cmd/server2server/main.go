@@ -17,7 +17,9 @@ import (
 	"flag"
 )
 
-type GreetServer struct{}
+type GreetServer struct {
+	ServerName string
+}
 
 func (s *GreetServer) Greet(
 	ctx context.Context,
@@ -25,14 +27,16 @@ func (s *GreetServer) Greet(
 ) (*connect.Response[greetv1.GreetResponse], error) {
 	log.Println("Request headers: ", req.Header())
 	res := connect.NewResponse(&greetv1.GreetResponse{
-		Greeting: fmt.Sprintf("Hello, %s!", req.Msg.Name),
+		Greeting: fmt.Sprintf("Hello, %s! by.%s", req.Msg.Name, s.ServerName),
 	})
 	res.Header().Set("Greet-Version", "v1")
 	return res, nil
 }
 
-func ServerRoutine(myPort int) {
-	server := &GreetServer{}
+func ServerRoutine(myPort int, serverName string) {
+	server := &GreetServer{
+		ServerName: serverName,
+	}
 	mux := http.NewServeMux()
 	path, handler := greetv1connect.NewGreetServiceHandler(server)
 	mux.Handle(path, handler)
@@ -66,11 +70,12 @@ func ClientRoutine(partnerPort int) {
 
 func main() {
 	var (
-		me      = flag.Int("MyPort", 8080, "my port number")
-		partner = flag.Int("PartnerPort", 8080, "port number of the communication partner")
+		me         = flag.Int("MyPort", 8080, "my port number")
+		partner    = flag.Int("PartnerPort", 8080, "port number of the communication partner")
+		serverName = flag.String("ServerName", "Dummy", "name to identify the server")
 	)
 	flag.Parse()
 
-	go ServerRoutine(*me)
+	go ServerRoutine(*me, *serverName)
 	ClientRoutine(*partner)
 }
