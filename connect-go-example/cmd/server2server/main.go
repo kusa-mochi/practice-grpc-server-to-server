@@ -40,6 +40,7 @@ func ServerRoutine(myPort int, serverName string) {
 	mux := http.NewServeMux()
 	path, handler := greetv1connect.NewGreetServiceHandler(server)
 	mux.Handle(path, handler)
+	fmt.Printf("I'm %s\n", serverName)
 	http.ListenAndServe(
 		fmt.Sprintf("localhost:%v", myPort),
 		h2c.NewHandler(mux, &http2.Server{}),
