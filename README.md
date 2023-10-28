@@ -15,7 +15,7 @@ end box
 box ServerB
     participant "main-B Go routine" as main_b
     participant "server B Go routine" as server_b
-    participant "RPC handler B Go routine" as handler_B
+    participant "RPC handler B Go routine" as handler_b
 end box
 
 == Start servers ==
