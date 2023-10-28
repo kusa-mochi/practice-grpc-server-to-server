@@ -2,7 +2,7 @@
 
 test server-to-server transitions using only unary RPCs between 2 Connect servers.
 
-![sequence dialog](http://www.plantuml.com/plantuml/proxy?src=https://gist.githubusercontent.com/kusa-mochi/8b0901ba27fe2097a00b764e2ec391a7/raw/7611980f4dce03d8569b8e1487e2511565e3d07a/server_to_server_connect.puml)
+![sequence dialog](http://www.plantuml.com/plantuml/proxy?src=https://gist.githubusercontent.com/kusa-mochi/8b0901ba27fe2097a00b764e2ec391a7/raw/3158096001d2841335dabb06d75f688a0a452fb4/server_to_server_connect.puml)
 <!-- ```plantuml
 @startuml
 
